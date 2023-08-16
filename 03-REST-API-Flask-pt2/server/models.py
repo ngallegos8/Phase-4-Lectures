@@ -21,18 +21,16 @@ class Production(db.Model, SerializerMixin):
     ongoing = db.Column(db.Boolean)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
-    cast_members = db.relationship('CastMember', backref='production')
+    crew_members = db.relationship('CrewMember', backref='production')
         
-    serialize_rules = ('-cast_members.production',)
-
+    serialize_rules = ('-crew_members.production',)
     #add a validation using @validates()
-
 
     def __repr__(self):
         return f'<Production Title:{self.title}, Genre:{self.genre}, Budget:{self.budget}, Image:{self.image}, Director:{self.director},ongoing:{self.ongoing}>'
 
-class CastMember(db.Model, SerializerMixin):
-    __tablename__ = 'cast_members'
+class CrewMember(db.Model, SerializerMixin):
+    __tablename__ = 'crew_members'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
@@ -41,10 +39,8 @@ class CastMember(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     production_id = db.Column(db.Integer, db.ForeignKey('productions.id'))
     
-    serialize_rules = ('-production.cast_members',)
-
-    #add a validation using @validates()
-
+    serialize_rules = ('-production.crew_members',)
+    #add a validation using @validates( )
     def __repr__(self):
         return f'<Production Name:{self.name}, Role:{self.role}'
 

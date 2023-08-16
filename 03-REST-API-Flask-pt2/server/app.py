@@ -19,7 +19,7 @@ from flask_restful import Api, Resource
 # 1.✅ Import NotFound from werkzeug.exceptions for error handling
 
 
-from models import db, Production, CastMember
+from models import db, Production, CrewMember
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
