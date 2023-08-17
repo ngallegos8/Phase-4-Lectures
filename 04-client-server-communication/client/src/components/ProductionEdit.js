@@ -6,7 +6,7 @@ import * as yup from "yup"
 
 
 
-function ProductionFormEdit({updateProduction, production_edit}) {
+function ProductionEdit({updateProduction, production_edit}) {
   const [errors, setError] = useState(false)
   const history = useHistory()
   const formSchema = yup.object().shape({
@@ -60,7 +60,7 @@ function ProductionFormEdit({updateProduction, production_edit}) {
     )
   }
   
-  export default ProductionFormEdit
+  export default ProductionEdit
 
   const Form = styled.form`
     display:flex;

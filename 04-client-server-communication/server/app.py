@@ -4,7 +4,7 @@
 # Set up:
     # cd into server and run the following in Terminal
         # export FLASK_APP=app.py
-        # export FLASK_RUN_PORT=5000
+        # export FLASK_RUN_PORT=6000
         # flask db init
         # flask db revision --autogenerate -m'Create tables' 
         # flask db upgrade 
@@ -17,7 +17,7 @@
     # Create Procfile.dev in root
         # in Procfile.dev add:
             # web: PORT=3000 npm start --prefix client
-            # api: gunicorn -b 127.0.0.1:5000 --chdir ./server app:app
+            # api: gunicorn -b 127.0.0.1:6000 --chdir ./server app:app
         # In Terminal, cd into root and run:
             # `honcho start -f Procfile.dev`
 from flask import Flask, request, make_response, abort

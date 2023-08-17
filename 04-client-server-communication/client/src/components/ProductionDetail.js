@@ -8,6 +8,7 @@ function ProductionDetail() {
   
   const params = useParams()
   const history = useHistory()
+  
   useEffect(()=>{
     fetch(`/productions/${params.id}`)
     .then(res => { 
