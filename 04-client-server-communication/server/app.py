@@ -1,25 +1,35 @@
 #!/usr/bin/env python3
 # 📚 Review With Students:
-    # REST
-    # Status codes
-    # Error handling 
+    # Validations
 # Set up:
-    # cd into server and run the following in the terminal
-    # export FLASK_APP=app.py
-    # export FLASK_RUN_PORT=5000
-    # flask db init
-    # flask db revision --autogenerate -m'Create tables' 
-    # flask db upgrade 
-    # python seed.py
+    # cd into server and run the following in Terminal
+        # export FLASK_APP=app.py
+        # export FLASK_RUN_PORT=5000
+        # flask db init
+        # flask db revision --autogenerate -m'Create tables' 
+        # flask db upgrade 
+        # python seed.py
+        # cd into client and run `npm`
+# Running React Together 
+    # Verify that gunicorn and honcho have been added to the pipenv
+    #Honcho: https://honcho.readthedocs.io/en/latest/
+    #Gunicorn: https://gunicorn.org/
+    # Create Procfile.dev in root
+        # in Procfile.dev add:
+            # web: PORT=3000 npm start --prefix client
+            # api: gunicorn -b 127.0.0.1:5000 --chdir ./server app:app
+        # In Terminal, cd into root and run:
+            # `honcho start -f Procfile.dev`
 from flask import Flask, request, make_response, abort
 from flask_migrate import Migrate
-
 from flask_restful import Api, Resource
-
-# 1.✅ Import NotFound from werkzeug.exceptions for error handling
 from werkzeug.exceptions import NotFound
-
 from models import db, Production, CrewMember
+
+# 5.✅ Import CORS from flask_cors, invoke it and pass it app
+#   5.1Start up the server / client and navigate to client/src/App.js
+#Security feature that allows browswe to enfore same origin policy
+#Prevents scripts from accessing the domains resources
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
@@ -43,6 +53,7 @@ class Productions(Resource):
         return response
 
     def post(self):
+        #4.✅ Add a try except, try to create a new production. If a ValueError is raised call abort with a 422 and pass it the validation errors.
         new_production = Production(
             title=request.form['title'],
             genre=request.form['genre'],
@@ -70,8 +81,6 @@ class ProductionByID(Resource):
 
     def get(self,id):
         production = Production.query.filter_by(id=id).first()
-# 3.✅ If a production is not found raise the NotFound exception
-    # 3.1 AND/OR use abort() to create a 404 with a customized error message
         if not production:
             return handle_not_found(NotFound())
         
@@ -82,14 +91,7 @@ class ProductionByID(Resource):
         )
         
         return response
-
-# 4.✅ Patch
-    # 4.1 Create a patch method that takes self and id
-    # 4.2 Query the Production from the id
-    # 4.3 If the production is not found raise the NotFound exception AND/OR use abort() to create a 404 with a customized error message
-    # 4.4 Loop through the request.form object and update the productions attributes. Note: Be cautions of the data types to avoid errors.
-    # 4.5 add and commit the updated production 
-    # 4.6 Create and return the response
+    
     def patch(self, id):
         production = Production.query.filter_by(id=id).first()
 
@@ -108,14 +110,7 @@ class ProductionByID(Resource):
             production_dict, 200
         )
 
-        return response
-  
-# 5.✅ Delete
-    # 5.1 Create a delete method, pass it self and the id
-    # 5.2 Query the Production 
-    # 5.3 If the production is not found raise the NotFound exception AND/OR use abort() to create a 404 with a customized error message
-    # 5.4 delete the production and commit 
-    # 5.5 create a response with the status of 204 and return the response 
+        return response 
     def delete(self, id):
         production = Production.query.filter_by(id=id).first()
 
@@ -132,10 +127,6 @@ class ProductionByID(Resource):
    
 api.add_resource(ProductionByID, '/productions/<int:id>')
 
-# 2.✅ use the @app.errorhandler() decorator to handle Not Found
-    # 2.1 Create the decorator and pass it NotFound
-    # 2.2 Use make_response to create a response with a message and the status 404
-    # 2.3 return t he response
 @app.errorhandler(NotFound)
 def handle_not_found(e):
     response = make_response(
@@ -144,5 +135,5 @@ def handle_not_found(e):
 
 
 # To run the file as a script
-if __name__ == '__main__':
-    app.run(port=4000, debug=True)
+# if __name__ == '__main__':
+#     app.run(port=4000, debug=True)
