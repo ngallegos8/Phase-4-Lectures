@@ -31,14 +31,17 @@ app.secret_key = b'\xb8C\xack"}]c_\xb7\xf0\xcdng\xe7\xdf'
         # 3.3.1 convert the request from json and select the user name sent form the client. 
         # 3.3.2 Use the name to query the user with a .filter
         # 3.3.3 If found set the user_id to the session hash
-        # 3.3.4 convert the user to_dict and send a response back to the client 
+        # 3.3.4 convert the user to_dict and send a response back to the client
+    # Test this route out in client
 
-# 3. Create a logout route now! set session to None
+# 3. Create a logout route now! set session to None, and test this route out in client
 
 # 4. Use @app.before_request, to run a function that checks if the session has the correct user, before every request
+# Test this route out in client
 
 
 # 8) Create a route to sign in and authenticate the user
+# Test this route out in client
 
 
 
