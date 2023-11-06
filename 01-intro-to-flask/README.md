@@ -24,6 +24,3 @@
 - Flask Routing and Views 
 - Flask Application Structure
 - SQLAlechmy in Flask
-
-
-![Alt text](image.png)
