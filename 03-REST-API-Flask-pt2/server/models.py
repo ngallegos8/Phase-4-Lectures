@@ -26,14 +26,10 @@ class Production(db.Model, SerializerMixin):
 
 
         
-    # serialize_rules = ('-crew_members.production',)
-    serialize_rules = ('-crew_members', '-created_at', '-updated_at',)
+    serialize_rules = ('-crew_members.production',)
+    # serialize_rules = ('-crew_members', '-created_at', '-updated_at',)
+
     #add a validation using @validates()
-    @validates('title')
-    def validate_title(self, key, value):
-        if not value:
-            raise ValueError("Title cannot be empty")
-        return value
 
     def __repr__(self):
         return f'<Production Title:{self.title}, Genre:{self.genre}, Budget:{self.budget}, Image:{self.image}, Director:{self.director},ongoing:{self.ongoing}>'
@@ -48,14 +44,10 @@ class CrewMember(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     production_id = db.Column(db.Integer, db.ForeignKey('productions.id'))
     
-    # serialize_rules = ('-production.crew_members',)
-    serialize_rules = ('-production',)
+    serialize_rules = ('-production.crew_members',)
+    # serialize_rules = ('-production',)
+    
     #add a validation using @validates( )
-    @validates('role')
-    def validate_role(self, key, value):
-        if not value:
-            raise ValueError("Role cannot be empty")
-        return value
     
     def __repr__(self):
         return f'<Production Name:{self.name}, Role:{self.role}'
