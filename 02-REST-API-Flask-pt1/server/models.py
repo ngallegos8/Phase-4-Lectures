@@ -24,7 +24,7 @@ class Production(db.Model, SerializerMixin):
     #3. Create a serialize rule that will help add our `crew_members` to the response and remove created_at and updated_at.
     #Demo serialize_only by only allowing title to be included in the response
     #once done remove or comment the serialize_only line.
-    serialize_rules = ('-crew_members.production',)
+    serialize_rules = ('-created_at','-updated_at',)
 
     def __repr__(self):
         return f'<Production Title:{self.title}, Genre:{self.genre}, Budget:{self.budget}, Image:{self.image}, Director:{self.director},ongoing:{self.ongoing}>'
