@@ -46,9 +46,9 @@ db.init_app(app)
 # https://www.restapitutorial.com/httpstatuscodes.html 
 
 
-#2. make a get and post request to /productions, make responses and return a status code
+#8. make a get and post request to /productions, make responses and return a status code
 #demonstrate serialization
 
 
 
-#8. make a get, patch, and delete request to /productions/id, make responses and return a status code
+#9. make a get, patch, and delete request to /productions/id, make responses and return a status code
