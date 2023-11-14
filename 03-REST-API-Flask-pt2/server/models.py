@@ -1,13 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
-#Review: Serializer rules, validations
 db = SQLAlchemy()
-#There are many ways to include constraints in models
-#db.CheckConstraint
-#nullable = False
-#unique = True
-#@validates('')
 
 class Production(db.Model, SerializerMixin):
     __tablename__ = 'productions'
@@ -24,11 +18,9 @@ class Production(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     crew_members = db.relationship('CrewMember', backref='production')
 
-
-        
     serialize_rules = ('-crew_members.production',)
-    # serialize_rules = ('-crew_members', '-created_at', '-updated_at',)
 
+    #Review
     #add a validation using @validates()
 
     def __repr__(self):
@@ -45,10 +37,7 @@ class CrewMember(db.Model, SerializerMixin):
     production_id = db.Column(db.Integer, db.ForeignKey('productions.id'))
     
     serialize_rules = ('-production.crew_members',)
-    # serialize_rules = ('-production',)
     
-    #add a validation using @validates( )
-    
-    def __repr__(self):
-        return f'<Production Name:{self.name}, Role:{self.role}'
+    #Review
+    #add a validation using @validates()
 
