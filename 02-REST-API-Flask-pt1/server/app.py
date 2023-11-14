@@ -8,11 +8,16 @@
         # export FLASK_APP=app.py
         # export FLASK_RUN_PORT=5000
         # flask db init
-        # flask db revision --autogenerate -m 'Create tables' 
+        # flask db revision --autogenerate -m 'Create tables' or flask db migrate -m "Created Tables"
         # flask db upgrade 
         # python seed.py
 
 # RESTful Routing
+# REST stands for Representational State Transfer 
+# provides a way of mapping HTTP verbs (get, post, put, delete) and CRUD actions (create, read, update, delete) together. 
+# It is a convention for defining routes and when something follows the rest principle it is known as RESTFUL.
+# REST Reading: https://www.geeksforgeeks.org/restful-routes-in-node-js/ 
+
 # | HTTP Verb 	|       Path       	| Description        	|
 # |-----------	|:----------------:	|--------------------	|
 # | GET       	|   /productions   	| READ all resources 	|
@@ -20,6 +25,7 @@
 # | POST      	|   /productions   	| CREATE one resource 	|
 # | PATCH/PUT 	| /productions/:id 	| UPDATE one resource	|
 # | DELETE    	| /productions/:id 	| DESTROY one resource 	|
+
 from flask import Flask, request, make_response, jsonify
 from flask_migrate import Migrate
 
