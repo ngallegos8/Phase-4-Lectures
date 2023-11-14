@@ -48,28 +48,6 @@ db.init_app(app)
 
 #2. make a get and post request to /productions, make responses and return a status code
 #demonstrate serialization
-@app.route("/productions", methods = ["GET", "POST"])
-def showProductions():
-    if request.method == "GET":
-        productions = Production.query.all()
-        all_productions = []
-        for play in productions:
-            all_productions.append(play.to_dict())
-        return make_response(all_productions, 200)
-    
-    elif request.method == "POST":
-        data = request.get_json()
-        new_production = Production(
-            title = data["title"],
-            genre = data["genre"],
-            budget = data['budget'],
-            image = data['image'],
-            director = data['director'],
-            description = data["description"],
-            ongoing = data['ongoing']
-        )
-        db.session.add(new_production)
-        db.session.commit()
-        return make_response(new_production.to_dict(), 201)
+
 
 #8. make a get, patch, and delete request to /productions/id, make responses and return a status code
