@@ -16,10 +16,11 @@ from flask_migrate import Migrate
 from flask_restful import Api, Resource
 # 1.✅ Import NotFound from werkzeug.exceptions for error handling
 
+
 #2. ✅ Import `Api` and `Resource` from `flask_restful`
     # ❓ What do these two classes do at a higher level? 
 
-    
+
 from models import db, Production, CrewMember
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
