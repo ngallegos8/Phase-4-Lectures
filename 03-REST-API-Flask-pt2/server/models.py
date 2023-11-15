@@ -1,9 +1,12 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
+<<<<<<< HEAD
 #Review
 #Import validates from sqlalchemy.orm
 
+=======
+>>>>>>> parent of 036bcfa (updated starter code)
 db = SQLAlchemy()
 
 class Production(db.Model, SerializerMixin):
@@ -48,6 +51,7 @@ class CrewMember(db.Model, SerializerMixin):
     
     #Review
     #add a validation using @validates()
+<<<<<<< HEAD
     #Navigate to app.py
     @validates("role")
     def validate_role(self,key, value):
@@ -55,4 +59,6 @@ class CrewMember(db.Model, SerializerMixin):
             raise ValueError("Role Cannot be empty")
         return value
     
+=======
+>>>>>>> parent of 036bcfa (updated starter code)
 
