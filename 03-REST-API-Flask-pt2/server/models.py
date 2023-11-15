@@ -1,6 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
-from sqlalchemy.orm import validates
+#Review
+#Import validates from sqlalchemy.orm
+
 db = SQLAlchemy()
 
 class Production(db.Model, SerializerMixin):
@@ -40,4 +42,6 @@ class CrewMember(db.Model, SerializerMixin):
     
     #Review
     #add a validation using @validates()
+    #Navigate to app.py
+    
 
