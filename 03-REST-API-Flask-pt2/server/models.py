@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
+from sqlalchemy.orm import validates
 #Review
 #Import validates from sqlalchemy.orm
 
@@ -24,6 +25,11 @@ class Production(db.Model, SerializerMixin):
 
     #Review
     #add a validation using @validates()
+    @validates("title")
+    def validate_title(self, key, value):
+        if not value:
+            raise ValueError("Title cannot be empty")
+        return value
 
     def __repr__(self):
         return f'<Production Title:{self.title}, Genre:{self.genre}, Budget:{self.budget}, Image:{self.image}, Director:{self.director},ongoing:{self.ongoing}>'
@@ -43,5 +49,10 @@ class CrewMember(db.Model, SerializerMixin):
     #Review
     #add a validation using @validates()
     #Navigate to app.py
+    @validates("role")
+    def validate_role(self,key, value):
+        if not value: 
+            raise ValueError("Role Cannot be empty")
+        return value
     
 

@@ -11,8 +11,10 @@
     # flask db revision --autogenerate -m'Create tables' or flask db migrate -m "created tables"
     # flask db upgrade 
     # python seed.py
-from flask import Flask, request, make_response, abort
+from flask import Flask, request, make_response, abort, jsonify
 from flask_migrate import Migrate
+from werkzeug.exceptions import NotFound
+from flask_restful import Api, Resource
 # 1.✅ Import NotFound from werkzeug.exceptions for error handling
 #2. ✅ Import `Api` and `Resource` from `flask_restful`
     # ❓ What do these two classes do at a higher level? 
@@ -25,11 +27,11 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 migrate = Migrate(app, db)
 db.init_app(app)
-
+ 
 
 #3. Initialize the Api
     # `api = Api(app)`
-
+api = Api(app)
 #4. Create a Production class that inherits from Resource
 
 #5. Create a GET (All) Route
@@ -44,7 +46,8 @@ db.init_app(app)
     #Return `response`.
     #After building the route, run the server and test in the browser.
     #Use our serializer to format our response to be cleaner
- 
+
+
 #6. Create a POST Route.
     #Create a new production from the `request.form` object.
     #Add and commit the new production.
@@ -54,6 +57,41 @@ db.init_app(app)
 
    
 #7. Add the new route to our api with `api.add_resource`
+class Productions(Resource):
+
+    def get(self):
+        production_list = [prod.to_dict() for prod in Production.query.all()]
+
+        response = make_response(
+            jsonify(production_list), 200
+        )
+        return response
+    
+    def post(self):
+
+        new_production = Production(
+            title = request.form['title'],
+            genre = request.form['genre'],
+            budget = request.form['budget'],
+            image = request.form['image'],
+            director = request.form['director'],
+            description = request.form['description'],
+            ongoing = request.form['ongoing']
+        )
+
+        db.session.add(new_production)
+        db.session.commit()
+
+        response_dict = new_production.to_dict()
+
+        response = make_response(response_dict, 201)
+
+        return response
+    
+api.add_resource(Productions, '/productions')
+
+
+    
 
 #8. Create a GET (One) route
     #Build a class called `ProductionByID` that inherits from `Resource`.
