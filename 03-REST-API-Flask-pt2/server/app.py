@@ -13,10 +13,6 @@
     # python seed.py
 from flask import Flask, request, make_response, abort, jsonify
 from flask_migrate import Migrate
-<<<<<<< HEAD
-from werkzeug.exceptions import NotFound
-=======
->>>>>>> parent of 036bcfa (updated starter code)
 from flask_restful import Api, Resource
 # 1.✅ Import NotFound from werkzeug.exceptions for error handling
 
@@ -32,9 +28,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 migrate = Migrate(app, db)
 db.init_app(app)
-<<<<<<< HEAD
- 
-=======
 
 from models import db, Production
 app = Flask(__name__)
@@ -44,7 +37,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 migrate = Migrate(app, db)
 db.init_app(app)
->>>>>>> parent of 036bcfa (updated starter code)
 
 #3. Initialize the Api
     # `api = Api(app)`
@@ -61,19 +53,6 @@ api = Api(app)
     #       jsonify(productions),
     #       200
     #  )
-<<<<<<< HEAD
-    #Return `response`.
-    #After building the route, run the server and test in the browser.
-    #Use our serializer to format our response to be cleaner
-
-
-#6. Create a POST Route.
-    #Create a new production from the `request.form` object.
-    #Add and commit the new production.
-    #Convert the new production to a dictionary with `to_dict`
-    #Set `make_response` to a `response` variable and pass it the new production along with a status of 201.
-    #Test the route in Postman.
-=======
     # 4.5 Return `response`.
     # 4.6 After building the route, run the server and test in the browser.
 
@@ -96,7 +75,6 @@ api = Api(app)
     # 11.4 Convert the new production to a dictionary with `to_dict`
     # 11.5 Set `make_response` to a `response` variable and pass it the new production along with a status of 201.
     # 11.6 Test the route in Postman.
->>>>>>> parent of 036bcfa (updated starter code)
 
    
 #7. Add the new route to our api with `api.add_resource`
