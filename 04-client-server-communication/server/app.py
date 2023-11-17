@@ -19,6 +19,10 @@ from flask_restful import Api, Resource
 from werkzeug.exceptions import NotFound
 from models import db, Production, CrewMember
 
+#2. Import CORS from flask_cors, invoke it and pass it app
+#Security feature that allows browser to enfore same origin policy
+#Prevents scripts from accessing the domains resources
+
 #2. Running React Together 
     # Verify that gunicorn and honcho have been added to the pipenv
     #Honcho: https://honcho.readthedocs.io/en/latest/
