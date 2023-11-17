@@ -1,7 +1,7 @@
 // 📚 Review With Students:
     // Request response cycle
     //Note: This was build using v5 of react-router-dom
-import { Route, Switch, useNavigate } from 'react-router-dom'
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider, useNavigate } from 'react-router-dom'
 import {createGlobalStyle} from 'styled-components'
 import {useEffect, useState} from 'react'
 import Home from './components/Home'
@@ -11,11 +11,11 @@ import ProductionDetail from './components/ProductionDetail'
 import NotFound from './components/NotFound'
 import ProductionEdit from "./components/ProductionEdit"
 
-function App() {
-  //Note: This may be a good opportunity to refactor with context
+function App(){
+      //Note: This may be a good opportunity to refactor with context
   const [productions, setProductions] = useState([])
   const [production_edit, setProductionEdit] = useState(false)
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   //4. GET Productions
   //navigate to client/src/components/ProductionForm.js
 
@@ -25,40 +25,35 @@ function App() {
   const deleteProduction = (deleted_production) => setProductions(productions => productions.filter((production) => production.id !== deleted_production.id) )
   const handleEdit = (production) => {
     setProductionEdit(production)
-    navigate(`/productions/edit/${production.id}`)
+    // navigate(`/productions/edit/${production.id}`)
   }
 
+  const  router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path ="/" element={<Navigation />}>
+        <Route index element={<Home productions={productions} />}/>
+        <Route  path='/productions/new' element={<ProductionForm addProduction={addProduction}/>}/>
+        <Route  path='/productions/edit/:id' elemebt={<ProductionEdit updateProduction={updateProduction} production_edit={production_edit}/>}/>
+        <Route path='/productions/:id' element={<ProductionDetail handleEdit={handleEdit} deleteProduction={deleteProduction} />}/>
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    )
+  )
+
   return (
-    <>
-    <GlobalStyle />
-    <Navigation handleEdit={handleEdit}/>
-      <Switch>
-        <Route  path='/productions/new'>
-          <ProductionForm addProduction={addProduction}/>
-        </Route>
-        <Route  path='/productions/edit/:id'>
-          <ProductionEdit updateProduction={updateProduction} production_edit={production_edit}/>
-        </Route>
-        <Route path='/productions/:id'>
-            <ProductionDetail handleEdit={handleEdit} deleteProduction={deleteProduction} />
-        </Route>
-        <Route exact path='/'>
-          <Home  productions={productions} />
-        </Route>
-        <Route>
-          <NotFound />
-        </Route>
-      </Switch>
-    </>
+    <div>
+    <RouterProvider router ={router}/>
+    </div>
   )
 }
+
 
 export default App
 
 const GlobalStyle = createGlobalStyle`
-    body{
-      background-color: black; 
-      color:white;
-    }
-    `
+  body{
+    background-color: black; 
+    color:white;
+  }
+  `
 
