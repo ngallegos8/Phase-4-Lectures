@@ -27,6 +27,7 @@ from models import db, Production, CrewMember
     # Verify that gunicorn and honcho have been added to the pipenv
     #Honcho: https://honcho.readthedocs.io/en/latest/
     #Gunicorn: https://gunicorn.org/
+    #Alternative for windows: https://docs.pylonsproject.org/projects/waitress/en/latest/ 
     # Create Procfile.dev in root
         # in Procfile.dev add:
             # web: PORT=3000 npm start --prefix client
