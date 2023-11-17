@@ -19,11 +19,7 @@ from flask_restful import Api, Resource
 from werkzeug.exceptions import NotFound
 from models import db, Production, CrewMember
 
-#2. Import CORS from flask_cors, invoke it and pass it app
-#Security feature that allows browser to enfore same origin policy
-#Prevents scripts from accessing the domains resources
-
-#3. Running React Together 
+#2. Running React Together 
     # Verify that gunicorn and honcho have been added to the pipenv
     #Honcho: https://honcho.readthedocs.io/en/latest/
     #Gunicorn: https://gunicorn.org/
@@ -62,11 +58,11 @@ class Productions(Resource):
         new_production = Production(
             title=request.form['title'],
             genre=request.form['genre'],
-            budget=int(request.form['budget']),
-            image=request.form['image'],
-            director=request.form['director'],
+            # budget=int(request.form['budget']),
+            # image=request.form['image'],
+            # director=request.form['director'],
             description=request.form['description'],
-            ongoing=bool(request.form['ongoing']),
+            # ongoing=bool(request.form['ongoing']),
         )
 
         db.session.add(new_production)
