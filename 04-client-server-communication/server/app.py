@@ -2,6 +2,8 @@
 # 📚 Review With Students:
     # Validations
 # Set up:
+    #1. 
+
     # cd into server and run the following in Terminal
         # export FLASK_APP=app.py
         # export FLASK_RUN_PORT=6000
@@ -9,8 +11,19 @@
         # flask db revision --autogenerate -m'Create tables' 
         # flask db upgrade 
         # python seed.py
-        # cd into client and run `npm`
-# Running React Together 
+        # cd into client and run `npm install`
+
+from flask import Flask, request, make_response, abort
+from flask_migrate import Migrate
+from flask_restful import Api, Resource
+from werkzeug.exceptions import NotFound
+from models import db, Production, CrewMember
+
+#2. Import CORS from flask_cors, invoke it and pass it app
+#Security feature that allows browser to enfore same origin policy
+#Prevents scripts from accessing the domains resources
+
+#3. Running React Together 
     # Verify that gunicorn and honcho have been added to the pipenv
     #Honcho: https://honcho.readthedocs.io/en/latest/
     #Gunicorn: https://gunicorn.org/
@@ -20,16 +33,8 @@
             # api: gunicorn -b 127.0.0.1:6000 --chdir ./server app:app
         # In Terminal, cd into root and run:
             # `honcho start -f Procfile.dev`
-from flask import Flask, request, make_response, abort
-from flask_migrate import Migrate
-from flask_restful import Api, Resource
-from werkzeug.exceptions import NotFound
-from models import db, Production, CrewMember
-
-# 5.✅ Import CORS from flask_cors, invoke it and pass it app
-#   5.1Start up the server / client and navigate to client/src/App.js
-#Security feature that allows browswe to enfore same origin policy
-#Prevents scripts from accessing the domains resources
+    #Navigate to app.js
+    
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
@@ -43,6 +48,7 @@ db.init_app(app)
 api = Api(app)
 
 class Productions(Resource):
+
     def get(self):
         production_list = [p.to_dict() for p in Production.query.all()]
         response = make_response(
@@ -51,9 +57,8 @@ class Productions(Resource):
         )
 
         return response
-
+    
     def post(self):
-        #4.✅ Add a try except, try to create a new production. If a ValueError is raised call abort with a 422 and pass it the validation errors.
         new_production = Production(
             title=request.form['title'],
             genre=request.form['genre'],
@@ -76,7 +81,6 @@ class Productions(Resource):
         return response
 api.add_resource(Productions, '/productions')
 
-
 class ProductionByID(Resource):
 
     def get(self,id):
@@ -91,7 +95,8 @@ class ProductionByID(Resource):
         )
         
         return response
-    
+
+
     def patch(self, id):
         production = Production.query.filter_by(id=id).first()
 
@@ -110,7 +115,9 @@ class ProductionByID(Resource):
             production_dict, 200
         )
 
-        return response 
+        return response
+    
+
     def delete(self, id):
         production = Production.query.filter_by(id=id).first()
 

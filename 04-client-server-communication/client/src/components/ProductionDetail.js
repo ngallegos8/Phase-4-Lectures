@@ -8,23 +8,15 @@ function ProductionDetail() {
   
   const params = useParams()
   const history = useHistory()
-  
-  useEffect(()=>{
-    fetch(`/productions/${params.id}`)
-    .then(res => { 
-      if(res.ok){
-        res.json().then(data => setProduction(data))
-      } else {
-        res.json().then(data => setError(data.error))
-      }
-    })
-  },[])
 
-  //12.✅ Create a Delete Button and add a fetch request that will delete a production 
+  //6. Get One Production
+  
+
+
+  //7. Create a Delete Button and add a fetch request that will delete a production 
 
   
   const {id, title, genre, image,description, crew_members} = production 
-  if(error) return <h2>{error}</h2>
   return (
       <CardDetail id={id}>
         <h1>{title}</h1>
