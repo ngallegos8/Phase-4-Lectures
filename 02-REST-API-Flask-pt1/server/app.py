@@ -39,11 +39,52 @@ app.json.compact = False
 migrate = Migrate(app, db)
 db.init_app(app)
 
+@app.route('/')
+def index():
+    html = '''
+    <html>
+        <body>
+            <h1>Welcome!</>
+        </body>
+    </html>
+'''
+    return html
+
 #Using routes we can add methods = [GET,POST] to our @app.route("/path")
 #We can then check that the request.method == "GET" or "POST" or "DELETE" or "PATCH" and run our functionality
 #When we post we can get the data by using request.form.get("field")
 #Then we can make a response with make_response() and return a status code
 # https://www.restapitutorial.com/httpstatuscodes.html 
+
+@app.route("/productions", methods=["GET", "POST"])
+def show_productions():
+
+    if request.method == "GET":
+        productions = Production.query.all()
+        all_productions = []
+        for play in productions:
+            all_productions.append(play.to_dict(only=("title", "budget", "genre", "image", "director", "description", "ongoing")))
+        return make_response(all_productions, 200)
+    elif request.method == "POST":
+        data = request.get_json()
+        print(data)
+        new_production = Production(
+            title = data["title"],
+            genre = data["genre"],
+            budget = data["budget"],
+            image = data["image"],
+            director = data["director"],
+            description = data["description"],
+            ongoing = data["ongoing"]
+        )
+        db.session.add(new_production)
+        db.session.commit()
+        return new_production.to_dict(), 201
+        # OR...
+        # return make_response(new_production.toDict(), 201)
+    
+
+
 
 
 #2. make a get and post request to /productions, make responses and return a status code
@@ -51,3 +92,33 @@ db.init_app(app)
 
 
 #8. make a get, patch, and delete request to /productions/id, make responses and return a status code
+@app.route("/productions/<id>", methods=["GET", "PATCH", "DELETE"])
+def showProductionsById(id):
+    production = Production.query.filter(Production.id == id).first()
+
+    if production:
+        if request.method == "PATCH":
+            data = request.get_json()
+            for attr in data:
+                setattr(production, attr, data[attr])
+            print(production.to_dict())
+            db.session.add(production)
+            db.session.commit()
+            return production.to_dict(), 202 #staus code for PATCH
+
+        elif request.method == "DELETE":
+            db.session.delete(production)
+            db.session.commit()
+            return {}, 204 #status code for no response (DELETE)
+        
+        else:
+            return production.to_dict(), 200
+    else:
+        return {"Exception": "Invalid Request"}, 400
+    
+
+        
+
+    
+if __name__ == "__main__":
+    app.run(port=5555, debug=True)
