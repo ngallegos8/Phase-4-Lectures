@@ -19,12 +19,16 @@ class Production(db.Model, SerializerMixin):
     ongoing = db.Column(db.Boolean)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
-    crew_members = db.relationship('CrewMember', back_populations='production')
+    crew_members = db.relationship('CrewMember', back_populates='production')
 
     serialize_rules = ('-crew_members.production',)
 
     #Review
     #add a validation using @validates()
+    @validates("title", "budget")
+    def validate_title(self, key, value):
+        if not value:
+            raise ValueError("")
     
 
     def __repr__(self):
