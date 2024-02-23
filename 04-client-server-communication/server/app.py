@@ -22,6 +22,7 @@ from models import db, Production, CrewMember
 #2. Import CORS from flask_cors, invoke it and pass it app
 #Security feature that allows browser to enfore same origin policy
 #Prevents scripts from accessing the domains resources
+from flask_cors import CORS
 
 #2. Running React Together 
     # Verify that gunicorn and honcho have been added to the pipenv
@@ -48,6 +49,7 @@ db.init_app(app)
 
 api = Api(app)
 
+
 class Productions(Resource):
 
     def get(self):
@@ -60,13 +62,14 @@ class Productions(Resource):
         return response
     
     def post(self):
+        data = request.get_json()
         new_production = Production(
-            title=request.form['title'],
-            genre=request.form['genre'],
-            # budget=int(request.form['budget']),
+            title=data['title'],
+            genre=data['genre'],
+            # budget=int(data['budget']),
             # image=request.form['image'],
             # director=request.form['director'],
-            description=request.form['description'],
+            description=data['description'],
             # ongoing=bool(request.form['ongoing']),
         )
 
